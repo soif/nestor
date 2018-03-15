@@ -8,7 +8,7 @@ class NestorPage_page extends NestorPage {
 		$content=<<<EOF
 <div class="jumbotron text-center">
 <h1>I'm Nestor, At your service!</h1>
-<img src="/static/img/nestor1.gif">
+<img src="/static/img/nestor.gif">
 </div>
 EOF;
 		$this->Display($content);
