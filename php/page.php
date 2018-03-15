@@ -59,8 +59,7 @@ class NestorPage{
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous"> -->
-    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap_nestor.min.css" crossorigin="anonymous">
 
     <title>{$page_title}</title>
   </head>
