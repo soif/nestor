@@ -4,6 +4,9 @@ class NestorPage{
 	protected $page_url;
 	protected $page_title;
 	protected $show_title=true;
+
+	protected $url_static	='/static';
+	protected $url_root		='';
 	
 
 	protected $menu_main=array(
@@ -26,11 +29,15 @@ class NestorPage{
 		$cur=str_replace('_','/',$page);
 		if($cur=='index'){$cur='';}
 		$this->page_url="/$cur";
+
+		$this->url_root		="{$_SERVER['REQUEST_SCHEME']}://{$_SERVER['HTTP_HOST']}";
+		$this->url_static	=$this->url_root.$this->url_static;
 	}
 
 
 	// ----------------------------------------------------------------------------------------------------------------
 	function GetHeader(){
+		$static= & $this->url_static;
 		
 		//menus
 		foreach($this->menu_main as $url => $title){
@@ -54,12 +61,18 @@ class NestorPage{
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
+    <!-- Required for Bootstrap -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="/static/bootstrap/css/bootstrap_nestor.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="{$static}/bootstrap/css/bootstrap_nestor.min.css" crossorigin="anonymous">
+	<!-- IOS -->
+	<meta name="apple-mobile-web-app-title" content="Nestor" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+	<link rel="apple-touch-icon" href="{$static}/img/icon57.png" />
+	<!-- Icon -->
+	<link rel="SHORTCUT ICON" href="{$static}/img/icon32.gif" />
+	<link rel="icon" type="image/gif" href="{$static}/img/icon32.gif" />
 
     <title>{$page_title}</title>
   </head>
@@ -67,7 +80,7 @@ class NestorPage{
 	<div class="container">
 
 		<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-		  <a class="navbar-brand" href="/"><img src="/static/img/logo.gif" width="30" height="30" alt=""></a>
+		  <a class="navbar-brand" href="/"><img src="{$static}/img/logo.png" width="30" height="30" alt=""></a>
 	  
 		  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
@@ -119,9 +132,9 @@ EOF;
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
     -->
-    <script src="/static/js/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
-    <script src="/static/js/popper.min.js" crossorigin="anonymous"></script>
-    <script src="/static/bootstrap/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script src="{$static}/js/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
+    <script src="{$static}/js/popper.min.js" crossorigin="anonymous"></script>
+    <script src="{$static}/bootstrap/js/bootstrap.min.js" crossorigin="anonymous"></script>
   </body>
 </html>
 EOF;
