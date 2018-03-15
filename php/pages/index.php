@@ -7,8 +7,8 @@ class NestorPage_page extends NestorPage {
 	function run(){
 		$content=<<<EOF
 <div class="jumbotron text-center">
-<h1>I'm Nestor, At your service!</h1>
-<img src="/static/img/nestor.gif">
+	<h1>I'm Nestor, At your service!</h1>
+	<img src="{$this->url_static}/img/nestor.gif">
 </div>
 EOF;
 		$this->Display($content);
