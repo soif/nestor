@@ -1,0 +1,10 @@
+## OS Specific Hidden Files ####
+
+# MacOSX Finder *****
+.DS_Store
+
+# Fuse FileSystem ***
+.fuse_hidden*
+
+
+## Project #########################
