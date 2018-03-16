@@ -21,25 +21,6 @@ class NestorCore {
 	}
 
 	// ----------------------------------------------------------------------------------------------------------------
-	public function GetModule($module_key){
-		if(!isset($this->conf['modules'][$module_key])){
-			return false;
-		}
-		$module_conf	= $this->conf['modules'][$module_key];
-		$module_name	= $module_conf['module'];
-
-		$path_module	= "{$this->path_php}modules/{$module_name}.php";
-		if(!file_exists($path_module)){
-			die("Cant find a modules named $module_name at $path_module !");
-		}
-
-		require_once($this->path_php.'module.php');
-		require_once($path_module);
-		$class="NestorModule_{$module_name}";
-		return new $class($module_conf);
-	}
-
-	// ----------------------------------------------------------------------------------------------------------------
 	public function GetNestorVersion(){
 		return $this->nestor_version;
 	}
