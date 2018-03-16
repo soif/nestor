@@ -76,7 +76,7 @@ function install_nginx_php(){
 	#apt-get install nginx php5-cli php5-fpm
 	apt-get install nginx php-cli php-fpm
 	systemctl enable  php7.0-fpm
-	ln -s $DIR/var/nginx/nestor_site /etc/nginx/sites-available/nestor_site
+	ln -s $DIR/var/etc/nginx/nestor_site /etc/nginx/sites-available/nestor_site
 	ln -s /etc/nginx/sites-available/nestor_site /etc/nginx/sites-enabled/nestor_site
 	rm /etc/nginx/sites-enabled/default
 	service nginx restart
@@ -90,6 +90,16 @@ function fix_dhcp(){
 	chmod 755 /etc/dhcp/dhclient-enter-hooks.d/leave_my_resolv_conf_alone
 }
 
+# ----------------------------------
+function install_daemon(){
+	echo "\n** Install daemon ................................"
+	ln -s $DIR/var/etc/systemd/nestor.service /etc/systemd/system/nestor.service
+	ln -s $DIR/var/etc/systemd/nestor_clock.service /etc/systemd/system/nestor_clock.service
+	systemctl enable nestor.service
+	systemctl enable nestor_clock.service
+	#service nestor start
+	#service nestor_clock start
+}
 
 
 
@@ -108,3 +118,5 @@ echo ""
 #install_tm1637
 #install_nginx_php
 #fix_dhcp
+#install_daemon
+
