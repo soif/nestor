@@ -1,0 +1,19 @@
+[Unit]
+Description=Nestor Daemon
+After=network-online.target
+
+[Service]
+Type=simple 
+User=root
+Group=root
+ExecStart=/root/nestor/bin/nestord_clock
+#UMask=007
+Restart=on-failure
+
+# Configures the time to wait before service is stopped forcefully.
+TimeoutStopSec=10
+# Give the script some time to startup
+TimeoutSec=10
+
+[Install]
+WantedBy=multi-user.target
