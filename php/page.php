@@ -9,9 +9,14 @@ class NestorPage{
 	protected $url_root		='';
 	
 
-	protected $menu_main=array(
+	protected $menu_names=array(
 		'/'			=> 'Home',
 		'/about'	=> 'About',
+	);
+
+	protected $menu_icons=array(
+		'/'			=> 'home',
+		'/about'	=> 'info-circle',
 	);
 
 	protected $menu_adm=array(
@@ -40,17 +45,17 @@ class NestorPage{
 		$static= & $this->url_static;
 		
 		//menus
-		foreach($this->menu_main as $url => $title){
+		foreach($this->menu_names as $url => $title){
 			$class='';$src="";
 			if($url == $this->page_url){$class="active";$src=" <span class='sr-only'>(current)</span>";}
-			$html_menu .="\t\t\t\t<li class='nav-item $class'><a class='nav-link' href='$url'>$title$src</a></li>\n";
+			$html_menu .="\t\t\t\t<li class='nav-item $class'><a class='nav-link' href='$url'><i class='fa fa-{$this->menu_icons[$url]}'></i> $title$src</a></li>\n";
 		}
 		foreach($this->menu_adm as $url => $title){
 			$html_menu_adm .="\t\t\t\t\t\t<a class='dropdown-item' href='$url'>$title</a>\n";
 		}
 		//title
 		if(! $this->page_title){
-			$this->page_title=$this->menu_main[$this->page_url] or $this->page_title=$this->menu_adm[$this->page_url];
+			$this->page_title=$this->menu_names[$this->page_url] or $this->page_title=$this->menu_adm[$this->page_url];
 			$auto_title=true;
 		}
 		$this->page_title and $this->show_title and $html_title="<h1 class='text-center'>{$this->page_title}</h1>";
@@ -65,6 +70,8 @@ class NestorPage{
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="{$static}/bootstrap/css/bootstrap_nestor.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="{$static}/fa/css/fontawesome-all.min.css" crossorigin="anonymous">
+
 	<!-- IOS -->
 	<meta name="apple-mobile-web-app-title" content="Nestor" />
 	<meta name="apple-mobile-web-app-capable" content="yes" />
@@ -122,9 +129,14 @@ EOF;
 
 	// ----------------------------------------------------------------------------------------------------------------
 	function GetFooter(){
+		$static= & $this->url_static;
+
 		return <<<EOF
 
 	<!-- ####### FOOTER ################################################################################################## -->
+	<div class='nestor_footer text-center'>
+		<small><a href="http://github.com/soif/nestor/"><i class='fab fa-github'></i> Nestor at Github</a></small>
+	</div>
 	</div><!-- end main container -->
 
     <script src="{$static}/js/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
