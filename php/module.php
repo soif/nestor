@@ -14,7 +14,6 @@ class NestorModule extends NestorCore {
 	protected $properties	=array();	// list of all properties that can be set by $cfg
 	protected $board_maps;				// map to use per board			
 
-
 /* 
 example OrangePicPc+
 root@opi2# gpio readall
@@ -108,17 +107,6 @@ What a pain in the ass to have to handle things like that !!!!!
 		$this->_EnsureWeHaveaWHTFmappingForThePins();
 	}
 
-/*
-	// ----------------------------------------------------------------------------------------------------------------
-	public function Process(){
-	}
-*/
-
-	// ----------------------------------------------------------------------------------------------------------------
-	//public function Display(){
-	//	die("NOT IMPLEMENTED");
-	//}
-
 	// ----------------------------------------------------------------------------------------------------------------
 	public function ListProperties(){
 		foreach($this->properties as $k){
@@ -129,16 +117,10 @@ What a pain in the ass to have to handle things like that !!!!!
 
 
 
+
 	// ################################################################################################################
 	// ### PROTECTED ##################################################################################################
 	// ################################################################################################################
-
-	// ----------------------------------------------------------------------------------------------------------------
-	protected function _AssignProperties($cfg){
-		foreach($this->properties as $k){
-			isset($cfg[$k]) and $this->$k =$cfg[$k];
-		}
-	}
 
 	// ----------------------------------------------------------------------------------------------------------------
 	protected function _ErrorMissingProperties(){
@@ -148,7 +130,6 @@ What a pain in the ass to have to handle things like that !!!!!
 		}
 	}
 
-
 	// ----------------------------------------------------------------------------------------------------------------
 	protected function _SetModulename(){
 		$parent =strtolower(get_parent_class());
@@ -156,7 +137,6 @@ What a pain in the ass to have to handle things like that !!!!!
 		$name	=str_replace($parent.'_', '', $name);
 		$this->module=$name;
 	}
-
 
 	// ----------------------------------------------------------------------------------------------------------------
 	protected  function _EnsureWeHaveaWHTFmappingForThePins(){
@@ -193,8 +173,6 @@ What a pain in the ass to have to handle things like that !!!!!
 		}
 	}
 
-
-	
 	// ----------------------------------------------------------------------------------------------------------------
 	private function _GuessBoard(){
 		$cpuinfo=shell_exec('cat /proc/cpuinfo');
