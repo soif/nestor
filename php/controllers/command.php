@@ -7,10 +7,10 @@ class NestorController_command extends NestorController{
 	// command lines arguments
 	private $args				= array();	// command line arguments
 	private $bin				= '';		// binary name of the invoked command
+	private $object				= '';		//  object to instance
+	private $method				= '';		//  method to invoke
+	private $param				= '';		//  param to pass to method
 	
-	// command lines flags
-	private $flag_debug			= false;
-
 /*
 	// ----------------------------------------------------------------------------------------------------------------
 	public function __construct($cfg){
@@ -36,7 +36,7 @@ class NestorController_command extends NestorController{
 
 	// ---------------------------------------------------------------------------------------
 	public function Action_module(){
-		$obj= $this->ProcessObject('module');
+		$obj= $this->ProcessObject('module', $this->object, $this->method, $this->param);
 		if($this->flag_debug and $obj->log_commands){
 			echo "# Command DEBUG:\n";
 			echo implode("\n",$obj->log_commands);
@@ -44,22 +44,32 @@ class NestorController_command extends NestorController{
 		}
 	}
 
+	// ---------------------------------------------------------------------------------------
+	public function Action_source(){
+		$cfg = $this->conf['sources'][$this->object];
+		isset($cfg['method']) and $method=$cfg['method'] or  $method='';
+		$obj=$this->ProcessObject('source', $this->object, $method, $cfg['param']);		
+		$new_data=$obj->GetFreshdata();
+		echo $new_data."\n";
+	}
 
 	// ---------------------------------------------------------------------------------------
 	private	$actions_desc=array(
-		'module'		=> "perform an action from the selected module (ie display text, get data...)",
+		'module'		=> "perform an action from the selected module (ie display text)",
+		'source'			=> "fetch data  from the selected data source ",
 		'list'			=> "list modules defined in the configuration file",
 		'help'			=> "Show full help"
 	);
 	private	$actions_usage=array(
 		'module'		=> "module	MODULE METHOD PARAM [options]",
+		'source'		=> "source	SOURCE [options]",
 		'list'			=> "list modules",
 		'help'			=> "help"
 	);
 
 	// ---------------------------------------------------------------------------------------
 	public function Command_usage(){
-		echo "* Usage             : {$this->bin} ACTION [PARMS...] [options]\n";
+		echo "* Usage             : {$this->bin} ACTION [PARAMS...] [options]\n";
 		echo "\n";
 		echo "* Valid Actions : \n";
 		foreach($this->actions_desc as $k => $v){
@@ -87,20 +97,20 @@ class NestorController_command extends NestorController{
 EOF;
 	}
 
-
 	// ---------------------------------------------------------------------------------------
-	public function Action_list(){
-		$type=$this->object;
-		switch ($type) {
-			case 'modules':
-				echo "Available Modules are: \n";
-				foreach($this->conf['modules'] as $conf => $arr){
-					echo "  - $conf : {$arr['module']} module\n";
-				}
-				break;
-			default:
-				$this->_dieError ("Unknown List type '$type'");
-				break;
+	public function Action_list($types=''){
+		isset($types) or $types=$this->object.'s';
+		$type=preg_replace('#s$#','',$types);
+		if(isset($this->conf[$types])){
+			echo "Available $types are: \n";
+			foreach($this->conf[$types] as $conf_name => $arr){
+				$parent='';
+				isset($arr['type']) and $parent=": [{$arr['type']}] $type";
+				echo "  - $conf_name $parent\n";
+			}
+		}
+		else{
+			$this->_dieError ("Unknown List type '$types'");
 		}
 		echo "\n";
 	}
@@ -119,7 +129,7 @@ EOF;
 		echo "\033[0m\n";
 		if($list){
 			echo "\n";
-			$this->command_list($list);
+			$this->Action_list($list);
 		}
 		else{
 			echo "\n";
@@ -129,64 +139,8 @@ EOF;
 
 
 
-
 	// ############################################################################################
 	// #### PRIVATE ###############################################################################
 	// ############################################################################################
-
-	// -------------------------------------------------------------
-	private function _ParseCommandLine(){
-		global $argv;
-		$this->args		= $this->_ParseArguments($argv);
-		$this->bin 		= basename($this->args['commands'][0]);
-		isset($this->args['commands'][1])	and	$this->action	= $this->args['commands'][1];
-		isset($this->args['commands'][2])	and	$this->object	= $this->args['commands'][2];
-		isset($this->args['commands'][3])	and	$this->method	= $this->args['commands'][3];
-		isset($this->args['input'][4])		and	$this->param	= $this->args['input'][4]; // allow NEGATIVE numbers
-
-		isset($this->args['flags']['d'])		and $this->flag_debug	= (boolean) $this->args['flags']['d'];		
-		
-		//$this->arg_from			= $this->args['vars']['from'];
-
-	}
-
-	// -------------------------------------------------------------
-	// http://php.net/manual/en/features.commandline.php#78804
-	private function _ParseArguments($argv) {
-		$_ARG = array();
-		foreach ($argv as $arg) {
-			if (preg_match('#^-{1,2}([a-zA-Z0-9]*)=?(.*)$#', $arg, $matches)) {
-				$key = $matches[1];
-				switch ($matches[2]) {
-					case '':
-					case 'true':
-						$arg = true;
-						break;
-					case 'false':
-						$arg = false;
-						break;
-					default:
-						$arg = $matches[2];
-				}
-		   
-				/* make unix like -afd == -a -f -d */			
-				if(preg_match("/^-([a-zA-Z0-9]+)/", $matches[0], $match)) {
-					$string = $match[1];
-					for($i=0; strlen($string) > $i; $i++) {
-						$_ARG['flags'][$string[$i]] = true;
-					}
-				}
-				else {
-					$_ARG['vars'][$key] = $arg;	  
-				}			
-			}
-			else {
-				$_ARG['commands'][] = $arg;
-			}		
-		}
-		$_ARG['commands'][0] = basename($_ARG['commands'][0]);
-		$_ARG['input']=$argv;
-		return $_ARG;	
-	}
 }
 ?>
