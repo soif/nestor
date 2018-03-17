@@ -73,8 +73,7 @@ function install_tm1637(){
 function install_nginx_php(){
 	echo "\n** Install : php ................................"
 	apt-get install nginx
-	#apt-get install nginx php5-cli php5-fpm
-	apt-get install nginx php-cli php-fpm
+	apt-get install nginx php-cli php-fpm php-curl
 	systemctl enable  php7.0-fpm
 	ln -s $DIR/var/etc/nginx/nestor_site /etc/nginx/sites-available/nestor_site
 	ln -s /etc/nginx/sites-available/nestor_site /etc/nginx/sites-enabled/nestor_site
