@@ -5,11 +5,11 @@ class NestorController_command extends NestorController{
 	protected $invocation 		='command';
 
 	// command lines arguments
-	private $args				= array();	// command line arguments
-	private $bin				= '';		// binary name of the invoked command
-	private $object				= '';		//  object to instance
-	private $method				= '';		//  method to invoke
-	private $param				= '';		//  param to pass to method
+	protected $args				= array();	// command line arguments
+	protected $bin				= '';		// binary name of the invoked command
+	protected $object				= '';		//  object to instance
+	protected $method				= '';		//  method to invoke
+	protected $param				= '';		//  param to pass to method
 	
 /*
 	// ----------------------------------------------------------------------------------------------------------------

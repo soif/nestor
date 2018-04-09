@@ -9,7 +9,7 @@ class NestorController extends NestorCore{
 	protected $objets_cache			=array();
 
 	// command lines flags
-	private $flag_debug			= false;
+	protected $flag_debug			= false;
 
 /*
 	// ----------------------------------------------------------------------------------------------------------------
