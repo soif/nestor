@@ -98,14 +98,16 @@ EOF;
 	}
 
 	// ---------------------------------------------------------------------------------------
-	public function Action_list($types=''){
-		isset($types) or $types=$this->object.'s';
+	public function Action_list(){	//$types=''
+		//$types=$this->object.'s';
+		$types=$this->object;
 		$type=preg_replace('#s$#','',$types);
+		
 		if(isset($this->conf[$types])){
 			echo "Available $types are: \n";
 			foreach($this->conf[$types] as $conf_name => $arr){
 				$parent='';
-				isset($arr['type']) and $parent=": [{$arr['type']}] $type";
+				isset($arr['type']) and $parent="	: [{$arr['type']}] $type";
 				echo "  - $conf_name $parent\n";
 			}
 		}
