@@ -1,9 +1,9 @@
 <?php
 
-// Preferences ----------------------------------------------
+// Preferences -------------------------------------------------------------------
 $cfg['prefs']['clock_blink']=true;
 
-// Modules ----------------------------------------------
+// Modules -----------------------------------------------------------------------
 $cfg['modules']['7seg_in']['type']					='7seg_tm1637';
 $cfg['modules']['7seg_in']['pin_clk']				=16;
 $cfg['modules']['7seg_in']['pin_dio']				=18;
@@ -32,7 +32,7 @@ $cfg['modules']['clock']['display']['is_clock']		=1;
 //$cfg['modules']['clock']['display']['method']		='clock'; 
 $cfg['modules']['clock']['display']['blink']		=true; 
 	
-// Sources to fetch ----------------------------------------------
+// Sources to fetch --------------------------------------------------------------
 $cfg['sources']['temp_int']['type']					='domoticz'; 
 $cfg['sources']['temp_int']['param']['id']			=159; 
 $cfg['sources']['temp_int']['param']['key']			='Temp'; 
@@ -45,7 +45,7 @@ $cfg['sources']['temp_ext']['param']['key']			='Temp';
 $cfg['sources']['temp_ext']['grab_period']			=60; 
 $cfg['sources']['temp_ext']['provider']				='my_domoticz';
 
-// Providers ----------------------------------------------
+// Providers ---------------------------------------------------------------------
 $cfg['providers']['my_domoticz']['url']				='http://domoticz.lo.lo:8080';
 $cfg['providers']['my_mqtt']['ip']					='mqtt.lo.lo';
 
